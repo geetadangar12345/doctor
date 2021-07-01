@@ -1,0 +1,41 @@
+
+<p>available time slot</p>
+<%= form_tag search_doc_path  , :method => :get, :class => 'form-search' do %>
+  <%= collection_select :wek, :id, Wek.all, :id, :name %>
+  <%= collection_select :select_doc, :id, Doctor.all, :id, :start_time%>
+
+  <%= collection_select :person_name, :id, PersonName.all, :id, :name %>
+  <button type="submit" class="btn">Submit</button>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Time Slot</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @doctor.each do |doctor| %>
+      <tr>
+        <%if !doctor.not_available == true%>
+          <td><%#= doctor.start_time %></td>
+          <td><%#= doctor.end_time %></td>
+          <td><%#= doctor.name%></td>
+          <%#= link_to "book apointment", new_patient_path(:doc_id =>doctor.id, :doctor_selet => params[:doctor_select])%>
+        <%else%>
+          <p>doctornot available</p>
+        <%end%>
+      </tr>
+    <% end %>
+  </tbody>
+
+<script>
+  $(document).ready(function(){
+
+    $("#doctor_select").live("change", function(){
+      debugger
+      main_cat = $("#doctor_select").val();
+    })
+  }
+</script>
+

@@ -1,0 +1,46 @@
+
+<p>available time slot</p>
+
+
+  <%#= select_tag 'doctor_select' , options_for_select(@doctor.collect{|w|[w.name, w.id]} )%>
+  <%#= collection_select :doctor_select, Doctor.order(:name).map { |doc| [doc.name, doc.id]}%>
+
+<%= form_tag new_appointment_path  , :method => :get, :class => 'form-search' do %>
+  Day:<%= collection_select :wek, :id, Wek.all, :id, :name %>
+  Time:<%= collection_select :select_doc, :id, Doctor.all, :id, :start_time%>
+
+  Doctor Name:<%= collection_select :person_name, :id, PersonName.all, :id, :name %>
+  <button type="submit" class="btn">Submit</button>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Time Slot</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @doctor.each do |doctor| %>
+      <tr>
+        <%if !doctor.not_available == true%>
+          <td><%#= doctor.start_time %></td>
+          <td><%#= doctor.end_time %></td>
+          <td><%#= doctor.name%></td>
+          <%#= link_to "book apointment", new_patient_path(:doc_id =>doctor.id, :doctor_selet => params[:doctor_select])%>
+        <%else%>
+          <p>doctornot available</p>
+        <%end%>
+      </tr>
+    <% end %>
+  </tbody>
+
+<script>
+  $(document).ready(function(){
+
+    $("#doctor_select").live("change", function(){
+      debugger
+      main_cat = $("#doctor_select").val();
+    })
+  }
+</script>
+

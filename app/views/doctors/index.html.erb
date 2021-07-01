@@ -1,0 +1,47 @@
+<p>booked appointment</p>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>Day</th>
+      <th>Patient Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @appointment.each do |appointment| %>
+      <tr>
+        <%if appointment.is_select == true%>
+          <td><%= appointment.doctor.start_time %></td>
+          <td><%= appointment.wek.name %></td>
+          <td><%= appointment.patient.name%></td>
+          <% @app = appointment.is_select%>
+          
+          <td><%= link_to 'reject', reject_path(:appointment => @app,:id=>appointment.id)  %></td>
+          <%end%>
+      </tr>
+    <% end %>
+  </tbody>
+
+
+<table border="1">
+  <thead>
+    <tr>
+    </tr>
+  </thead>
+  <tbody>
+        <p>Pending appointment</p>
+    <% @appointment.each do |appointment| %>
+      <tr>
+        <%if appointment.is_select == false%>
+          <td><%= appointment.doctor.start_time %></td>
+          <td><%= appointment.wek.name %></td>
+          <td><%= appointment.patient.name%></td>
+          <% @app = appointment.is_select%>
+          
+          <td><%= link_to 'reject', reject_path(:appointment => @app,:id=>appointment.id)  %></td>
+          <td><%= link_to 'accept', accept_path(appointment) %></td>
+        <%end%>
+      </tr>
+    <% end %>
+  </tbody>
+  <%= link_to 'Logout', destroy_user_session_path %>
